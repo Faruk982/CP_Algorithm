@@ -1,0 +1,13 @@
+// Faruk
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define YES cout<<"YES"<<endl;
+#define NO cout<<"NO"<<endl;
+#define SetBit(x,k)(x|=(1ll<<k))
+#define ClearBit(x,k)(x&=~(1ll<<k))
+#define CheckBit(x,k)((x>>k)&1)
+#define CC(x) cout<<"Case "<<++x<<": ";
+#define pi pair<long long int,long long int>
+const int N = 3e5 + 10;
+ll i,j,k,l,m,n,a,b,c,d,e,f,g,h,t,q,e,x,y,z,w;

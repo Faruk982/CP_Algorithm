@@ -1,0 +1,43 @@
+//inverse a^(M-2)
+long long int binE(long long int a, long long int b)
+{
+  long long res = 1;
+  while (b > 0)
+  {
+    if (b & 1)
+    {
+      res = (res * a) % M;
+    }
+    a = (a * a) % M;
+    b >>= 1;
+  }
+  return res;
+}
+long long int binEE(long long int a, long long int b)
+{
+  long long res = 1;
+  while (b > 0)
+  {
+    if (b & 1)
+    {
+      res = (res * a) % M1;
+    }
+    a = (a * a) % M1;
+    b >>= 1;
+  }
+  return res;
+}
+long long int binM(long long int a, long long int b)
+{
+  long long res = 0;
+  while (b > 0)
+  {
+    if (b & 1)
+    {
+      res = (res + a) % M;
+    }
+    a = (a + a) % M;
+    b >>= 1;
+  }
+  return res;
+}

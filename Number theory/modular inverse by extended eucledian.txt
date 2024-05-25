@@ -1,0 +1,33 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+// Function to calculate the modular inverse using the Extended Euclidean Algorithm
+int extendedEuclidean(int a, int b, int& x, int& y) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+
+    int xPrev, yPrev;
+    int gcd = extendedEuclidean(b, a % b, xPrev, yPrev);
+
+    x = yPrev;
+    y = xPrev - (a / b) * yPrev;
+
+    return gcd;
+}
+
+// Function to calculate the modular inverse
+int modularInverse(int a, int m) {
+    int x, y;
+    int gcd = extendedEuclidean(a, m, x, y);
+
+    if (gcd != 1) {
+        cout<<"IMPOSSIBLE"<<endl;
+        return 0;
+    }
+
+    return (x % m + m) % m;
+}
+//O(log(min(a, m))).

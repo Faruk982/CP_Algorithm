@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+void sWap(int *a,int *b)
+{
+    if(a==b||*a==*b)return;
+    *a=*a+*b;
+    *b=*a-*b;
+    *a=*a-*b;
+}
+void Insertion_Sort(int ar[],int n)
+{
+    int i,ptr,tem;
+    for(i=1;i<n;i++)
+    {
+       ptr=i-1;
+       tem=ar[i];
+       while(ptr>=0&&ar[ptr]>tem)
+       {
+          sWap(&ar[ptr],&ar[ptr+1]); ptr--;
+       }
+
+    }
+}
+int main()
+{
+    int n,i;
+    cin>>n;
+    int ar[n];
+    for(i=0;i<n;i++)
+    {
+        cin>>ar[i];
+    }
+    Insertion_Sort(ar,n);
+    for(i=0;i<n;i++)
+    {
+        cout<<ar[i]<<" ";
+    }
+}

@@ -1,0 +1,38 @@
+for (int i = 1; i <= n; i++) {
+      int x; cin >> x;
+      for (auto p: primes) {
+        if (p <= x / p) {
+          if (x % p == 0) {
+            while (x % p == 0) {
+              x /= p;
+            }
+            cnt[p]++;
+          }
+        }
+        else break;
+      }
+      if (x > 1) {
+        cnt[x]++;
+      }
+    }
+or
+for(i=0;i<n;i++){
+        m=ar[i];
+        for(j=0;prime[j]*prime[j]<=m;j++){
+            if(m%prime[j]==0){
+                mk[prime[j]]++;
+            if(mk[prime[j]]>1)k=1;
+            while(m%prime[j]==0){
+                m/=prime[j];
+            }
+           // cout<<k<<" "<<prime[j]<<" "<<mk[prime[j]]<<endl;
+            }
+ 
+        }
+        if(m!=1){
+            mk[m]++;if(mk[m]>1)k=1;
+           // cout<<k<<" "<<m<<" "<<mk[m]<<endl;
+        }
+        
+        if(k==1)break;
+    }

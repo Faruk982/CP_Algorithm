@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e6+10;
+#define ll long long int
+vector<long long int>prime;
+vector<bool>isprime(N,1);
+unordered_map<int,int>vis1;
+unordered_map<int,int>vis2;
+unordered_map<int,int>level;
+unordered_map<int,int>lol;unordered_map<int,int>lol2;
+unordered_map<int,int>ind1;
+unordered_map<int,int>ind2;
+vector<long long int>v[N];
+vector<ll>g[N];
+unordered_map<ll,ll>vis;
+vector<long long int>vk;
+vector<long long int>v1(N,0);
+vector<long long int>v2(N,0);
+vector<long long int>vh;
+vector<long long int>i1;
+vector<long long int>i2;
+long long int ar[N],br[N],cr[N],mr[N];
+void dfs(ll ver){
+  vis[ver]=1;
+  for(ll child:g[ver]){
+    if(vis[child])continue;
+    dfs(child);
+  }
+}

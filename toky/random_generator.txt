@@ -1,0 +1,44 @@
+// Faruk
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define YES cout<<"YES"<<endl;
+#define NO cout<<"NO"<<endl;
+#define SetBit(x,k)(x|=(1ll<<k))
+#define ClearBit(x,k)(x&=~(1ll<<k))
+#define CheckBit(x,k)((x>>k)&1)
+#define CC(x) cout<<"Case "<<++x<<": ";
+const int N = 1e6 + 10;
+const int modulo = 10000007;
+//const int M1 = M - 1;
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+inline ll gen_random(ll l, ll r) {
+    return uniform_int_distribution<ll>(l, r)(rng);
+}
+int a, b, c, d, e, f;
+ll dp[10005];
+void fn(ll n) {
+  //cout<<n<<endl;
+  cout<<n<<" ";
+  fflush(stdout);
+  if(n==1)return ;
+  //if(n<0)return;
+  if(n%2==0)
+  {
+    fn(n/2);
+  }
+  else fn(3*n+1);
+}
+int main() {
+    int n, t,h=0;
+    t=gen_random(1,20);
+    cout<<t<<endl;
+    while(t--){
+     n=gen_random(1,10);
+     cout<<n<<endl;
+}
+
+    return 0;
+}
+

@@ -1,0 +1,145 @@
+// mutiset problem
+// ffff
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define YES cout << "YES" << endl;
+#define NO cout << "NO" << endl;
+#define SetBit(x, k) (x |= (1ll << k))
+#define ClearBit(x, k) (x &= ~(1ll << k))
+#define CheckBit(x, k) ((x >> k) & 1)
+#define CC(x) cout << "Case " << ++x << ": ";
+#define pi pair<long long int, long long int>
+#define fastio                  \
+  ios_base::sync_with_stdio(0); \
+  cin.tie(0);                   \
+  cout.tie(0)
+const int N = 2e6 + 10;
+const int M = 1e9 + 7;
+vector<ll> vdv[N];
+// map<ll, ll> vis;
+ll i, j, k, m, n, a, b, c, d, l, q, s;
+
+vector<ll> vk;
+map<ll, ll> vis1;
+map<ll, ll> vis;
+long long int binE(long long int a, long long int b)
+{
+  long long res = 1;
+  while (b > 0)
+  {
+    if (b & 1)
+    {
+      res = (res * a) % M;
+    }
+    a = (a * a) % M;
+    b >>= 1;
+  }
+  return res;
+}
+
+
+bool dist(ll x1,ll y1,ll r1,ll x2,ll y2,ll r2){
+  ll f=(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+  ll d=r1+r2;
+  if(f==d*d)return true;
+  return false;
+}
+map<pi, vector<pi>> vg;
+map<pi,ll>level,visp,rad;
+map<pi,pi>par;
+vector<pi>vpp;
+pi source;
+ll foul,findi,big,small;
+void dfs(ll x,ll y){
+  visp[{x,y}]=1;
+  if(level[{x,y}])big++;
+  else small++;
+  //cout<<x<<" parent "<<y<<" "<<rad[{x,y}]<<endl;
+  for(auto x1:vg[{x,y}]){
+    ll a=x1.first,b=x1.second;
+    // cout<<x<<" parent "<<y<<" "<<rad[{x,y}]<<endl;
+    // cout<<a<<" "<<b<<" "<<rad[{a,b}]<<endl;
+   if(visp[{a,b}]&&par[{x,y}]!=x1){
+        if(level[{x,y}]==level[x1]) foul=1;
+        //else if() findi=1;
+         continue;
+   }
+   else if(visp[{a,b}])continue;
+   level[{a,b}]=level[{x,y}]^1;
+   par[{a,b}]={x,y};
+   dfs(a,b);
+  }
+  pi p={x,y};
+  // if(vg[{x,y}].size()==1&&p!=source&&level[p]!=level[source]){
+  //   findi=1;
+  // }
+  return;
+}
+bool cmp(pair<long long int, long int> p1, pair<long long int, long int> p2)
+{
+  if (p1.first == p2.first)
+  {
+    return p1.second > p2.second;
+  }
+  else
+    return vg[p1].size() < vg[p2].size();
+}
+
+int main()
+{
+   
+
+    // Example: Adding elements to vg
+    
+  // for(ll i=1;i<N;i++)
+  //   {
+  //    for(ll j=i;j<N;j+=i){
+  //     vdv[j].push_back(i);
+  //    // cout<<i<<endl;
+  //    }
+  //   }
+  // for(auto x:vdv[10])cout<<x<<endl;
+  ll t;
+  map<ll, ll> fact;
+  // fact[0] = 1;
+  // for(ll i=1;i<=N;i++){
+  //   fact[i]=(i*fact[i-1])%M;
+  // }
+  cin >> t;
+  //cout<<t<<endl;
+   ll tt = 1, P = 464; // 1000000
+  // ll b;
+  //t=1;
+  while (t--)
+  {
+   ll n,k;
+   cin>>n>>k;
+  ll ar[n+1],br[n+1];
+   ll ans=0;vector<pi>vpp;
+   for(ll i=1;i<=n;i++){
+    cin>>ar[i]>>br[i];
+    vpp.push_back({br[i],ar[i]});
+   }
+   sort(vpp.begin(),vpp.end());
+  for(ll i=0;i<vpp.size();i++){
+    multiset<ll>taken;
+    ll sum=0;
+    for(ll j=i;j<vpp.size();j++){
+       sum+=vpp[j].second;
+       taken.insert(vpp[j].second);
+       while (taken.size()&&(sum+vpp[j].first-vpp[i].first)>k)
+       {
+        auto it=taken.rbegin();
+        ll cur=*it;
+        sum-=cur;
+        taken.erase(taken.find(cur));
+
+       }
+       ll h=taken.size();
+       ans=max(ans,h);
+    }
+  }
+  cout<<ans<<endl;
+  }
+}

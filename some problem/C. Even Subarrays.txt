@@ -1,0 +1,239 @@
+// Faruk-----finding number of subarray from a prefix xor
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define YES cout << "YES" << endl;
+#define NO cout << "NO" << endl;
+#define SetBit(x, k) (x |= (1ll << k))
+#define ClearBit(x, k) (x &= ~(1ll << k))
+#define CheckBit(x, k) ((x >> k) & 1)
+#define CC(x) cout << "Case " << ++x << ": ";
+#define pi pair<long long int, long long int>
+#define fastio                  \
+  ios_base::sync_with_stdio(0); \
+  cin.tie(0);                   \
+  cout.tie(0)
+const int N = 2e5 + 10;
+const int M = 998244353;
+
+vector<ll> vg;
+vector<ll> vk;
+map<ll, ll> vis1;
+map<ll, ll> vis2;
+map<ll, ll> vis3;
+map<ll, ll> vis;
+unordered_map<ll, ll> depth;
+vector<ll> g[N];
+ll i, j, k, l, m, n, a, b, c, d, f, h, t, q, e, x, y, z, w;
+map<ll, ll> rightr, leftr, parr;
+
+bool cmp(pair<long long int, long int> p1, pair<long long int, long int> p2)
+{
+  if (p1.first == p2.first)
+  {
+    return p1.second > p2.second;
+  }
+  else
+    return p1.first < p2.first;
+}
+long long int binE(long long int a, long long int b)
+{
+  long long res = 1;
+  while (b > 0)
+  {
+    if (b & 1)
+    {
+      res = (res * a) % M;
+    }
+    a = (a * a) % M;
+    b >>= 1;
+  }
+  return res;
+}
+map<ll, ll> facc, crr;
+
+#define pii pair<ll, ll>
+ll ans;
+string ss;
+int parent[N], sz[N];
+void make(int v)
+{
+  parent[v] = v;
+  sz[v] = 1;
+}
+int find(int v)
+{
+  if (parent[v] == v)
+    return parent[v];
+  else
+    return parent[v] = find(parent[v]);
+}
+void Union(int a, int b)
+{
+  a = find(a);
+  b = find(b);
+  if (a != b)
+  {
+    if (sz[a] < sz[b])
+    {
+      swap(a, b);
+    }
+    parent[b] = a;
+    sz[a] += sz[b];
+  }
+}
+ll dpp[N][2];
+vector<pi> vfp;
+ll ai;
+void ffp(ll i)
+{
+  ll x, y;
+  x = vfp[i].first;
+  y = vfp[i].second;
+  if (1)
+  {
+    if (0)
+    {
+    }
+    else
+    {
+      dpp[i][0] = min(dpp[i - 1][1] + vfp[i - 1].first * x, dpp[i - 1][0] + vfp[i - 1].second * x);
+      dpp[i][1] = min(dpp[i - 1][1] + vfp[i - 1].first * y, dpp[i - 1][0] + vfp[i - 1].second * y);
+    }
+    //   cout<<i<<" "<<dpp[i][0]<<" "<<dpp[i][1]<<" "<<x<<" "<<y<<endl;
+    if (i != n - 1)
+      ffp(i + 1);
+    else
+    {
+      ai = min(dpp[i][0], dpp[i][1]);
+    }
+    return;
+  }
+}
+map<char, int> cchar;
+ll kfc(ll x, ll y)
+{
+  if (x % y == 0)
+    return x / y;
+  else
+    return (x / y + 1);
+}
+vector<bool> isprime(N, true);
+vector<ll> prime;
+vector<ll> vdv[N];
+ll mmf = 1, mxf;
+map<ll, ll> pr;
+void dfs(ll ver, ll par)
+{
+  // cout<<ver<<endl;
+  vis[ver] = 1;
+  pr[ver] = par;
+  for (ll child : g[ver])
+  {
+    if (par == 0 && child == j)
+      continue;
+    if (vis[child])
+      continue;
+    dfs(child, ver);
+  }
+}
+ll tcnt(ll n)
+{
+  ll cnt = 0;
+  while (n)
+  {
+    cnt++;
+    n /= 10;
+  }
+  return cnt;
+}
+ll zcnt(ll n)
+{
+  ll cnt = 0;
+  while (n)
+  {
+    if (n % 10 == 0)
+      cnt++;
+    else
+      break;
+    n /= 10;
+  }
+  return cnt;
+}
+int main()
+{
+
+  vector<ll> pre;
+  vector<pair<ll, ll>> v_pi;
+  //fastio;
+  // #ifndef ONLINE_JUDGE
+  // 	freopen("input.txt", "r", stdin);
+  // 	freopen("output.txt", "w", stdout);
+  // #endif
+     isprime[0]=isprime[1]=false;
+     for(i=2;i<=N;i++)
+     {
+      if(isprime[i]){
+          prime.push_back(i);
+          for(j=2*i;j<=N;j+=i)isprime[j]=false;
+      }
+     }
+    //  for(i=1;i<=N;i++)
+    //  {
+    //   for(j=i;j<=N;j+=i)vdv[j].push_back(i);
+    //  }
+  // n=196560;
+  //  for(i=1;i<=n;i++){
+  //         if(n%i==0)vg.push_back(i);
+  //      }
+  //      cout<<vg.size()<<endl;
+  //      vg.clear();
+  vector<ll> vsm;
+  map<ll, ll> vl, vhh;
+
+  cin >> t;
+  ll P, tt = 0;
+  //t=1;
+  while (t--)
+  {
+     ll n;
+     cin>>n;
+     ll ar[n+1];
+     for(i=1;i<=n;i++)cin>>ar[i];
+     l=0;
+     vector<ll>far(4*n,0);
+     far[l]++;ans=n*(n+1)/2;
+     for(i=1;i<=n;i++){
+      l^=ar[i];
+      for(j=0;j*j<=(2*n);j++){
+        a=l^(j*j);
+        if(far[a]){
+          ans-=far[a];
+        }
+      }
+      far[l]++;
+     }
+     cout<<ans<<endl;
+    vis1.clear();
+      cchar.clear();
+      pre.clear();
+      crr.clear();
+      leftr.clear();
+      rightr.clear();
+      parr.clear();
+      vk.clear();
+      vg.clear();
+      v_pi.clear();
+      vis.clear();
+      // finer.clear();
+      vk.clear();
+      pre.clear();
+      vg.clear();
+      // vis.clear();
+      // cntr.clear();
+      vis2.clear();
+      vis3.clear();
+      vis1.clear();
+      depth.clear();
+    }
+  }

@@ -1,0 +1,172 @@
+//https://codeforces.com/gym/104758/problem/B
+//i was stuck whole fucking one day just because i used int insted of ll
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define YES cout << "YES" << endl;
+#define NO cout << "NO" << endl;
+#define SetBit(x, k) (x |= (1ll << k))
+#define ClearBit(x, k) (x &= ~(1ll << k))
+#define CheckBit(x, k) ((x >> k) & 1)
+#define CC(x) cout << "Case " << ++x << ": ";
+#define pi pair<long long int, long long int>
+#define fastio                  \
+  ios_base::sync_with_stdio(0); \
+  cin.tie(0);                   \
+  cout.tie(0)
+  const int N = 2e5+10;
+const int M = 1e9+7;
+vector<ll>vdv[N];
+// map<ll, ll> vis;
+ll i,j,k,m,n,a,b,c,d,l,q,s;
+
+ vector<ll>vk; map<ll,ll>vis1;
+map<ll,ll>vis;
+long long int binE(long long int a, long long int b)
+{
+  long long res = 1;
+  while (b > 0)
+  {
+    if (b & 1)
+    {
+      res = (res * a) % M;
+    }
+    a = (a * a) % M;
+    b >>= 1;
+  }
+  return res;
+}
+
+
+ll cll(ll x,ll y){
+  ll d=x/y;
+  if(x%y!=0)d++;
+  return d;
+}
+ll logg(ll x){
+  ll d=1,k=0;
+  while (d<x)
+  {
+    d*=2;k++;
+  }
+  return k;
+  
+}
+ll appro(ll stage){
+  //cout<<"infunction"<<endl;
+  ll d=pow(2,stage)-1;
+  // cout<<d<<endl;
+  // cout<<"out function"<<endl;
+  return d;
+}
+// A utility function to multiply two matrices
+// a[][] and b[][]. Multiplication result is
+// stored back in b[][]
+void multiply(ll a[4][4], ll b[4][4])
+{
+	// Creating an auxiliary matrix to store elements
+	// of the multiplication matrix
+  //  for(ll i=0;i<4;i++){
+  //   for(j=0;j<4;j++)cout<<a[i][j]<<" ";
+  //   cout<<endl;
+  // }
+  // cout<<"break"<<endl;
+  //  for(ll i=0;i<4;i++){
+  //   for(j=0;j<4;j++)cout<<b[i][j]<<" ";
+  //   cout<<endl;
+  // }
+  // cout<<"break2"<<endl;
+	ll mul[4][4];
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			mul[i][j] = 0;
+			for (int k = 0; k < 4; k++)
+				mul[i][j] =( (mul[i][j])%M +(a[i][k] * b[k][j])%M+M)%M;
+		}
+	}
+  // for(ll i=0;i<4;i++){
+  //   for(j=0;j<4;j++)cout<<mul[i][j]<<" ";
+  //   cout<<endl;
+  // }
+  // cout<<"result"<<endl;
+	// storing the multiplication result in a[][]
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			a[i][j] = mul[i][j]; // Updating our matrix
+}
+
+// Function to compute F raise to power n-2.
+int power(ll F[4][4], ll n)
+{
+	ll Mi[4][4] = { { 3,2,1,1}, { 1, 0, 0,0 }, { 0, 1, 0,0 } ,{0,0,0,1}};
+
+	// Multiply it with initial values i.e with
+	// F(0) = 0, F(1) = 1, F(2) = 1
+ // cout<<"n "<<n<<endl;
+ ll cnt=0;
+	while (n) {
+		if (n & 1) {
+			multiply(F, Mi);
+		}
+		multiply(Mi, Mi);
+		n >>= 1;
+    if(cnt++==10000)break;
+   // cout<<n<<endl;
+	}
+
+	// Multiply it with initial values i.e with
+	// F(0) = 0, F(1) = 1, F(2) = 1
+  // for(ll i=0;i<4;i++){
+  //   for(j=0;j<4;j++)cout<<F[i][j]<<" ";
+  //   cout<<endl;
+  // }
+  ll kh=(F[0][0]+F[1][1]+F[2][2]+F[3][3]+M)%M;
+	return (kh);
+}
+
+// Return n'th term of a series defined using below
+// recurrence relation.
+// f(n) is defined as
+// f(n) = f(n-1) + f(n-2) + f(n-3), n>=3
+// Base Cases :
+// f(0) = 0, f(1) = 1, f(2) = 1
+ll findNthTerm(ll n)
+{
+	// Instead of taking F[][] as a 3X1 2D array we took
+	// F[][] as 3X3 array with only the first column filled
+	// and the rest cells are filled with zeros
+	ll F[4][4] = { { 3, 0, 0,0 }, { 2, 0, 0 ,0}, { 1, 0, 0 ,0},{3,0,0,0}};
+
+	// Base cases
+	if (n == 0)
+		return 1;
+	if (n == 1 )
+		return 2;
+    if(n==2)
+    return 3;
+
+	return power(F, n - 2);
+}
+int main()
+{
+  // for(ll i=1;i<N;i++)
+  //   {
+  //    for(ll j=i;j<N;j+=i){
+  //     vdv[j].push_back(i);
+  //    // cout<<i<<endl;
+  //    }
+  //   }
+   // for(auto x:vdv[10])cout<<x<<endl;
+  ll t;
+ //  cin>>t; ll tt=1,P=1790;
+ t=1;
+  while (t--)
+  {
+    ll n;
+    cin>>n;
+    ll d=findNthTerm(n);
+    cout<<d<<endl;
+  }
+  
+}
+

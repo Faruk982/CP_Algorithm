@@ -1,0 +1,139 @@
+//https://codeforces.com/gym/104758/problem/B
+//i was stuck whole fucking one day just because i used int insted of ll
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long int
+#define YES cout << "YES" << endl;
+#define NO cout << "NO" << endl;
+#define SetBit(x, k) (x |= (1ll << k))
+#define ClearBit(x, k) (x &= ~(1ll << k))
+#define CheckBit(x, k) ((x >> k) & 1)
+#define CC(x) cout << "Case " << ++x << ": ";
+#define pi pair<long long int, long long int>
+#define fastio                  \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0)
+const int N = 2e5 + 10;
+const int M = 1e9 + 7;
+vector<ll> vdv[N];
+map<ll, ll> vis1;
+map<ll, ll> vis;
+long long int binE(long long int a, long long int b)
+{
+    long long res = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            res = (res * a) % M;
+        }
+        a = (a * a) % M;
+        b >>= 1;
+    }
+    return res;
+}
+
+ll cll(ll x, ll y)
+{
+    ll d = x / y;
+    if (x % y != 0)
+        d++;
+    return d;
+}
+ll logg(ll x)
+{
+    ll d = 1, k = 0;
+    while (d < x)
+    {
+        d *= 2;
+        k++;
+    }
+    return k;
+}
+ll appro(ll stage)
+{
+    ll d = pow(2, stage) - 1;
+    return d;
+}
+
+const int MOD = 1e9 + 7;
+
+class Matrix
+{
+public:
+    vector<vector<ll>> mat; // the contents of matrix as a 2D-vector
+    int n_rows, n_cols;      // number of rows and columns
+    Matrix(vector<vector<ll>> values) : mat(values), n_rows(values.size()), n_cols(values[0].size()) {}
+
+    static Matrix identity_matrix(int n)
+    {
+        // Return I_n - the identity matrix of size n.
+        // This function is static, because it creates a new Matrix instance
+        vector<vector<ll>> values(n, vector<ll>(n, 0));
+        for (int i = 0; i < n; i++)
+            values[i][i] = 1;
+        return values;
+    }
+
+    Matrix operator*(const Matrix &other) const
+    {
+        int n = n_rows, m = other.n_cols;
+        vector<vector<ll>> result(n_rows, vector<ll>(m, 0));
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+            {
+                ll sum = 0;
+                for (int k = 0; k < n_cols; k++)
+                {
+                    sum += (mat[i][k] * 1ll * other.mat[k][j]) % MOD;
+                    sum %= MOD;
+                }
+                result[i][j] = sum;
+            }
+        // Multiply matrices as usual, then return the result as the new Matrix
+        return Matrix(result);
+    }
+
+    inline bool is_square() const
+    {
+        return n_rows == n_cols;
+    }
+};
+
+Matrix fast_exponentiation(Matrix m, ll power)
+{
+    assert(m.is_square());
+    Matrix result = Matrix::identity_matrix(m.n_rows);
+   ll cnt=0;
+    while (power)
+    {
+        if (power & 1)
+            result = result * m;
+        m = m * m;
+        power >>= 1;
+        // if(cnt++==1000)break;
+        // cout<<power<<endl;
+    }
+
+    return result;
+}
+int main()
+{
+    fastio;
+    Matrix Mi({{3, 2, 1, 1}, {1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 0, 1}});
+    Matrix F({{3, 0, 0, 0}, {2, 0, 0, 0}, {1, 0, 0, 0}, {3, 0, 0, 0}});
+    ll n;
+    cin >> n;
+    if (n < 2)
+        cout << n + 1 << endl;
+    else
+    {
+        Mi = fast_exponentiation(Mi, n - 2);
+        Mi = Mi * F;
+        ll kh = Mi.mat[0][0] % MOD; // Take modulo here
+        cout << kh << endl;
+    }
+    return 0;
+}

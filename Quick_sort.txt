@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+void swp(int *a, int *b)
+{
+  if (a == b)
+    return;
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+int partion(int ar[], int low, int high)
+{
+  int left, right;
+  int pi = high;
+  left = low;
+  right = high - 1;
+  while (left <= right)
+  {
+    while (ar[left] <= ar[pi] && left <= right)
+      left++;
+    while (left <= right && ar[right] > ar[pi])
+      right--;
+    if (left < right)
+      swp(&ar[left], &ar[right]);
+  }
+
+  if (ar[left] > ar[pi])
+  {
+
+    swp(&ar[left], &ar[pi]);
+
+    return left;
+  }
+  return high;
+}
+void quick_sort(int ar[], int low, int high)
+{
+  if (low >= high)
+    return;
+  int pi;
+  pi = partion(ar, low, high);
+  quick_sort(ar, low, pi - 1);
+  quick_sort(ar, pi + 1, high);
+}
+int main()
+{
+  int n;
+  cin >> n;
+  int ar[n], br[n];
+  int i, j;
+  for (i = 0; i < n; i++)
+    cin >> ar[i];
+  quick_sort(ar, 0, n - 1);
+  for (i = 0; i < n; i++)
+    cout << ar[i] << " ";
+}

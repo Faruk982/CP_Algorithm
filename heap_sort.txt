@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+int heap_insert(int ar[],int n,int item)
+{
+    int par;int ch,ptr;
+    ptr=n;par=(ptr-1)/2;
+    ar[ptr]=item;
+    while(ptr>=0&&ar[ptr]>ar[par])
+    {
+        ch=ar[ptr];
+        ar[ptr]=ar[par];
+        ar[par]=ch;
+        ptr=par;par=(ptr-1)/2;
+    }
+    return n+1;
+}
+int heap_deletion(int ar[],int n)
+{
+    int re=ar[0];
+    int ptr,par;
+    ptr=n-1;
+    ar[0]=ar[ptr];
+    ar[n-1]=re;ptr=0;n--;int c=0;int max_i=ptr;
+    int left=2*ptr+1,right=2*ptr+2;
+    if(left<n&&ar[left]>ar[max_i])
+    {
+        max_i=left;c=1;
+    }
+    if(right<n&&ar[right]>ar[max_i])
+    {
+        max_i=right;c=1;
+    }
+    while(c&&ar[ptr]<ar[max_i])
+    {
+        swap(ar[ptr],ar[max_i]);
+        ptr=max_i;c=0;
+        left=2*ptr+1,right=2*ptr+2;
+    if(left<n&&ar[left]>ar[max_i])
+    {
+        max_i=left;c=1;
+    }
+    if(right<n&&ar[right]>ar[max_i])
+    {
+        max_i=right;c=1;
+    }
+
+    }
+    return n;
+}
+int main()
+{
+    int n;cin>>n;int br[n+1],i;
+    for(i=0;i<n;i++)
+    {
+        cin>>br[i];heap_insert(br,i,br[i]);
+    }
+    for(i=0;i<n;i++)cout<<br[i]<<" ";cout<<endl;
+    for(i=n;i>0;i--)
+    {
+        heap_deletion(br,i);
+    }
+    for(i=0;i<n;i++)cout<<br[i]<<" ";cout<<endl;
+}

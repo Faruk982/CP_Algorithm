@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+void swp(int *a, int *b)
+{
+    if (*a == *b)
+        return;
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void find_min_max(int ar[], int n, int i, int j, int *min_i, int *max_i)
+{
+    int ptr;
+    int min;
+    min = ar[*min_i];
+    int max = ar[*max_i];
+
+    for (ptr = i + 1; ptr <= j; ptr++)
+    {
+        if (min > ar[ptr])
+        {
+            min = ar[ptr];
+            *min_i = ptr;
+        }
+        else if (max < ar[ptr])
+        {
+            max = ar[ptr];
+            *max_i = ptr;
+        }
+    }
+}
+void min_max(int ar[], int n)
+{
+    int i, j, max_i, min_i;
+    for (i = 0, j = n - 1; i < j; i++, j--)
+    {
+        max_i = i;
+        min_i = i;
+        find_min_max(ar, n, i, j, &min_i, &max_i);
+        if (max_i == i)
+        {
+            max_i = min_i;
+        }
+        swp(ar + i, ar + min_i);
+        swp(ar + j, ar + max_i);
+    }
+}
+int main()
+{
+    int n, i;
+    cin >> n;
+    int ar[n];
+    for (i = 0; i < n; i++)
+        cin >> ar[i];
+    min_max(ar, n);
+    for (i = 0; i < n; i++)
+        cout << ar[i] << " ";
+}

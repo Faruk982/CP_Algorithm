@@ -1,0 +1,135 @@
+#include<bits/stdc++.h>
+using namespace std;
+class node
+{
+public:
+    int data;node*link;
+};
+void creation(node**head,int data)
+{
+    node*temp=*head;
+    node*ptr=new node;
+    ptr->data=data;
+    ptr->link=NULL;
+    if(temp==NULL)
+    {
+        //cout<<temp<<endl;
+        *head=ptr;
+    }
+    else
+    {
+        while(temp->link!=NULL)
+        {
+            temp=temp->link;
+        }
+        temp->link=ptr;
+    }
+}
+void print(node**head)
+{
+    node*temp=*head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";temp=temp->link;
+    }
+    cout<<endl;
+}
+int last_insertion(node**head,int data,int n)
+{
+    node*temp=*head;
+    node*ptr=new node;
+    ptr->data=data;ptr->link=NULL;
+    while(temp->link!=NULL)
+    {
+        temp=temp->link;
+    }
+    temp->link=ptr;
+    return n+1;
+}
+int After_insertion(node**head,int searchh,int data,int n)
+{
+    node*temp=*head;
+    node*ptr=new node;
+    ptr->data=data;ptr->link=NULL;
+    while(temp!=NULL)
+    {
+        if(temp->data==searchh)
+        {
+            if(temp->link==NULL)
+            {
+                temp->link=ptr;
+            }
+            else
+            {
+                ptr->link=temp->link;
+                temp->link=ptr;
+            }
+            return n+1;
+        }
+        temp=temp->link;
+    }
+    return n;
+}
+int vis[100];
+int vis2[100];
+node*head[100];
+void dfs(int n)
+{
+ 
+   stack<int>s;
+  s.push(n);vis[n]=1;
+  while(!s.empty())
+  {
+     int cur_node=s.top();
+     node*temp=head[cur_node];
+   if(!vis2[cur_node]) 
+   { cout<<cur_node<<" ";vis2[cur_node]=1;
+   }int c=0;
+    //s.pop();
+    while(temp!=NULL)
+    {
+        if(!vis[temp->data]) {
+             vis[temp->data]=1;
+             s.push(temp->data);c=1;
+            // temp=head[temp->data];
+        break;
+        }
+        temp=temp->link;
+    }
+    if(!c)s.pop();
+  }
+}
+int main()
+{
+    int i,j,n;
+    //node*head,*head2;
+    //head=new node();
+   // head2=new node();
+   // head=NULL;head2=NULL;
+    cin>>n;
+    for(i=1;i<=n;i++)
+    {
+       head[i]=new node();
+         head[i]=NULL;
+    }
+    int e,x,y;
+    cin>>e;
+    while (e--)
+    {
+      cin>>x>>y;
+      creation(&head[x],y);
+      creation(&head[y],x);
+    }
+    //for(i=1;i<=n;i++)print(&head[i]);
+    dfs(1);
+    // print(&head);
+    // for(i=0;i<n-1;i++)
+    // {
+    //     cin>>j;creation(&head2,j);
+    // }
+    // print(&head2);
+    
+    // print(&head);
+
+
+}

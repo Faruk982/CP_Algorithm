@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e6+10;
+const int M=1e9+7;
+vector<long long int>prime;
+vector<bool>isprime(N,1);
+unordered_map<int,int>vis1;
+unordered_map<int,int>vis2;
+unordered_map<int,int>level;
+unordered_map<int,int>ind;
+vector<long long int>v[N];
+vector<long long int>vk;
+vector<long long int>vg;
+vector<long long int>vh1;
+vector<long long int>vh2;
+vector<int>heap;
+int lowerBound(int el,int hi){
+  int lo=0,mid;
+  while (hi-lo>1)
+  {
+      mid=(hi+lo)/2;
+    if(vg[mid]<el){
+      lo=mid+1;
+    }
+    else{
+      hi=mid;
+    }
+  }
+  if(vg[lo]>=el)return lo;
+  else if(vg[hi]>=el)return hi;
+  else return -1;
+  
+}
